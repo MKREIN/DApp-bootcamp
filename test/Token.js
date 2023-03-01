@@ -6,11 +6,14 @@ const tokens = (n) => {
 };
 
 describe("Token", () => {
-  let token;
+  let token, accounts, deployer;
   beforeEach(async () => {
     // Fetch Token from blockchain w ether js
     const Token = await ethers.getContractFactory("Token");
     token = await Token.deploy("Nox", "NOX", "1000000000");
+
+    accounts = await ethers.getSigners();
+    deployer = accounts[0];
   });
 
   describe("deployment", () => {
@@ -35,8 +38,12 @@ describe("Token", () => {
     });
 
     it("has correct total supply", async () => {
-      // Read token name and Check that name is correct
       expect(await token.totalSupply()).to.equal(totalSupply);
+    });
+
+    it("assigns total supply to deployer", async () => {
+      console.log(deployer.address);
+      expect(await token.balanceOf(deployer.address)).to.equal(totalSupply);
     });
   });
 });
