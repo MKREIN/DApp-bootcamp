@@ -10,6 +10,8 @@ import {
   loadexchange,
 } from "../store/interaction";
 
+import Navbar from "./Navbar";
+
 function App() {
   const dispatch = useDispatch();
 
@@ -20,8 +22,15 @@ function App() {
     // Fetch current netrworks chain ID (hardhat: 31337, kovan: 42)
     const chainId = await loadNetwork(provider, dispatch);
 
-    // Fetch current account & balance from Metamask
-    await loadAccount(provider, dispatch);
+    // Reload page when network changes
+    window.ethereum.on("chainChanged", () => {
+      window.location.reload();
+    });
+
+    // Fetch current account & balance from Metamask when changed
+    window.ethereum.on("accountsChanged", () => {
+      loadAccount(provider, dispatch);
+    });
 
     // load token smart contracts
     const Nox = config[chainId].Nox;
@@ -40,7 +49,7 @@ function App() {
 
   return (
     <div>
-      {/* Navbar */}
+      <Navbar />
 
       <main className="exchange grid">
         <section className="exchange__section--left grid">
@@ -53,7 +62,7 @@ function App() {
         <section className="exchange__section--right grid">
           {/* PriceChart */}
           {/* Transactions */}
-          {/* Trades */}open
+          {/* Trades */}
           {/* OrderBook */}
         </section>
       </main>
