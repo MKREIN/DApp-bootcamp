@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import config from "../config.json";
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import config from '../config.json';
 
 import {
   loadProvider,
@@ -8,9 +8,10 @@ import {
   loadAccount,
   loadTokens,
   loadexchange,
-} from "../store/interaction";
+} from '../store/interaction';
 
-import Navbar from "./Navbar";
+import Navbar from './Navbar';
+import Markets from './Markets';
 
 function App() {
   const dispatch = useDispatch();
@@ -23,19 +24,24 @@ function App() {
     const chainId = await loadNetwork(provider, dispatch);
 
     // Reload page when network changes
-    window.ethereum.on("chainChanged", () => {
+    window.ethereum.on('chainChanged', () => {
       window.location.reload();
     });
 
     // Fetch current account & balance from Metamask when changed
-    window.ethereum.on("accountsChanged", () => {
+    window.ethereum.on('accountsChanged', () => {
       loadAccount(provider, dispatch);
     });
 
     // load token smart contracts
     const Nox = config[chainId].Nox;
     const Spud = config[chainId].Spud;
-    await loadTokens(provider, [Nox.address, Spud.address], dispatch);
+    const NFL = config[chainId].NFL;
+    await loadTokens(
+      provider,
+      [Nox.address, Spud.address, NFL.address],
+      dispatch
+    );
 
     // Load exchange contract
     const exchangeConfig = config[chainId].exchange;
@@ -53,7 +59,7 @@ function App() {
 
       <main className="exchange grid">
         <section className="exchange__section--left grid">
-          {/* Markets */}
+          <Markets />
 
           {/* Balance */}
 
