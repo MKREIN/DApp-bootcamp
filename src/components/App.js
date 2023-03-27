@@ -8,6 +8,7 @@ import {
   loadAccount,
   loadTokens,
   loadExchange,
+  loadAllOrders,
   subscribeToEvents,
 } from '../store/interactions';
 
@@ -15,6 +16,7 @@ import Navbar from './Navbar';
 import Markets from './Markets';
 import Balance from './Balance';
 import Order from './Order';
+import Orderbook from './Orderbook';
 
 function App() {
   const dispatch = useDispatch();
@@ -54,6 +56,9 @@ function App() {
       dispatch
     );
 
+    // Fetch all orders, open, filled, cancelled
+    loadAllOrders(provider, exchange, dispatch);
+
     // Listen to events
     subscribeToEvents(exchange, dispatch);
   };
@@ -79,7 +84,7 @@ function App() {
           {/* PriceChart */}
           {/* Transactions */}
           {/* Trades */}
-          {/* OrderBook */}
+          <Orderbook />
         </section>
       </main>
 
