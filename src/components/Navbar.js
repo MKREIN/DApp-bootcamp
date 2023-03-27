@@ -1,12 +1,12 @@
-import { useSelector, useDispatch } from "react-redux";
-import Blockies from "react-blockies";
+import { useSelector, useDispatch } from 'react-redux';
+import Blockies from 'react-blockies';
 
-import logo from "../assets/logo1.png";
-import eth from "../assets/eth.svg";
+import logo from '../assets/logo1.png';
+import eth from '../assets/eth.svg';
 
-import { loadAccount } from "../store/interaction";
+import { loadAccount } from '../store/interactions';
 
-import config from "../config.json";
+import config from '../config.json';
 
 const Navbar = () => {
   const provider = useSelector((state) => state.provider.connection);
@@ -22,7 +22,7 @@ const Navbar = () => {
 
   const networkHandler = async (e) => {
     await window.ethereum.request({
-      method: "wallet_switchEthereumChain",
+      method: 'wallet_switchEthereumChain',
       params: [{ chainId: e.target.value }],
     });
   };
@@ -75,7 +75,7 @@ const Navbar = () => {
             target="_blank"
             rel="noreferrer"
           >
-            {account.slice(0, 5) + "..." + account.slice(38, 42)}
+            {account.slice(0, 5) + '...' + account.slice(38, 42)}
             <Blockies
               seed={account}
               size={10}

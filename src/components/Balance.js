@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import xlogo from '../assets/x-logo.svg.png';
 import spud from '../assets/spud.png';
 
-import { loadBalances, transferTokens } from '../store/interaction';
+import { loadBalances, transferTokens } from '../store/interactions';
 // import { exchange } from '../store/reducers';
 
 const Balance = () => {
