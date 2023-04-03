@@ -35,7 +35,7 @@ const decorateOrder = (order, tokens) => {
 
   // Note: NOX should be considered token0 and Spud is considered token1
   // Example: Giving Spud in exchange for NOX
-  if (order.tokenGive === tokens[1].address) {
+  if (order.tokenGive === tokens[0].address) {
     token0Amount = order.amountGive; // The amount of Nox token we are giving
     token1Amount = order.amountGet; // The amount of Spud token we want...
   } else {
@@ -56,6 +56,80 @@ const decorateOrder = (order, tokens) => {
     formattedTimestamp: moment.unix(order.timestamp).format('h:mm:ssa d MMM D'),
   };
 };
+
+// ------------------------------------------------------------------------------
+// ALL FILLED ORDERS
+
+export const filledOrdersSelector = createSelector(
+  filledOrders,
+  tokens,
+  (orders, tokens) => {
+    if (!tokens[0] || !tokens[1]) {
+      return;
+    }
+
+    // Filter orders by selected tokens
+    orders = orders.filter(
+      (o) =>
+        o.tokenGet === tokens[0].address || o.tokenGet === tokens[1].address
+    );
+    orders = orders.filter(
+      (o) =>
+        o.tokenGive === tokens[0].address || o.tokenGive === tokens[1].address
+    );
+
+    // [x] Step 1. Sort orders by time ascending
+    // [x] Step 2. Apply order colors (decorate orders)
+    // [ ] Step 3. Sort orders by time decending for UI
+
+    // Sort orders by time ascending for price comparison
+    orders = orders.sort((a, b) => a.timestamp - b.timestamp);
+
+    // Decorate the orders
+    orders = decorateFilledOrders(orders, tokens);
+
+    // Sort orders by date descending for display
+    orders = orders.sort((a, b) => b.timestamp - a.timestamp);
+
+    return orders;
+  }
+);
+
+const decorateFilledOrders = (orders, tokens) => {
+  // Track previous order to compare history
+  let previousOrder = orders[0];
+
+  return orders.map((order) => {
+    // Decorate each order
+    order = decorateOrder(order, tokens);
+    order = decorateFilledOrder(order, previousOrder);
+    previousOrder = order; // Update the previous order once it's decoracted
+    return order;
+  });
+};
+
+const decorateFilledOrder = (order, previousOrder) => {
+  return {
+    ...order,
+    tokenPriceClass: tokenPriceClass(order.tokenPrice, order.id, previousOrder),
+  };
+};
+
+const tokenPriceClass = (tokenPrice, orderId, previousOrder) => {
+  // Show green price if only one order exists
+  if (previousOrder.id === orderId) {
+    return GREEN;
+  }
+
+  // Show green price if order price was higher than previous order
+  // Show red price if order price was lower than previous order
+  if (previousOrder.tokenPrice <= tokenPrice) {
+    return GREEN; // success
+  } else {
+    return RED; // danger
+  }
+};
+
 // ------------------------------------------------------------------------------
 // ORDER BOOK
 
