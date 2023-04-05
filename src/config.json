@@ -17,7 +17,27 @@
     },
     "explorerURL": "#"
   },
+
   "5": {
     "explorerURL": "https://goerli.etherscan.io/address/"
+  },
+  "11155111": {
+    "exchange": {
+      "address": "0x6702628Ed36ce94B65dFf0eF34E28b9Bf78ad466"
+    },
+
+    "Nox": {
+      "address": "0x46D9f7bE2EBD3bB8668CF61d4E2a40d398B21807"
+    },
+
+    "Spud": {
+      "address": "0xc1e1aE2e7761419f72266464838120e876266C0e"
+    },
+
+    "NFL": {
+      "address": "0x07806fee444627C9157203Cb19f23D06C877008F"
+    },
+
+    "explorerURL": "https://sepolia.etherscan.io/address/"
   }
 }
