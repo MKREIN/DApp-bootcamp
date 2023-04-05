@@ -21,6 +21,7 @@
   "5": {
     "explorerURL": "https://goerli.etherscan.io/address/"
   },
+
   "11155111": {
     "exchange": {
       "address": "0x6702628Ed36ce94B65dFf0eF34E28b9Bf78ad466"
@@ -37,7 +38,25 @@
     "NFL": {
       "address": "0x07806fee444627C9157203Cb19f23D06C877008F"
     },
-
     "explorerURL": "https://sepolia.etherscan.io/address/"
+  },
+
+  "80001": {
+    "exchange": {
+      "address": "0x3748b42D2d7f2a43215200c63777f8d4054a27D7"
+    },
+
+    "Nox": {
+      "address": "0xE74b53B462820694bAD39f433FF0fF7B8e9c681c"
+    },
+
+    "Spud": {
+      "address": "0xb399c99c2Ea6c44ffe615C6598a3fE97F7A210A0"
+    },
+
+    "NFL": {
+      "address": "0x3E1B8BabFb494a69385187A94EbbE64E34E12cDa"
+    },
+    "explorerURL": "https://mumbai.polyscan.com/"
   }
 }

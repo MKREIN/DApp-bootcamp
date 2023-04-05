@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import Blockies from 'react-blockies';
 
-import logo from '../assets/logo.png';
+import logo from '../assets/logo1.png';
 import eth from '../assets/eth.svg';
 
 import { loadAccount } from '../store/interactions';
@@ -21,6 +21,7 @@ const Navbar = () => {
   };
 
   const networkHandler = async (e) => {
+    console.log('Selected network:', e.target.value);
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: e.target.value }],
@@ -30,8 +31,8 @@ const Navbar = () => {
   return (
     <div className="exchange__header grid">
       <div className="exchange__header--brand flex">
-        <img src={logo} className="logo" alt="DApp Logo"></img>
-        <h1>DApp Token Exchange</h1>
+        <img src={logo} className="logo" alt="Logo"></img>
+        <h1>Infinity Token Exchange</h1>
       </div>
 
       <div className="exchange__header--networks flex">
@@ -47,10 +48,18 @@ const Navbar = () => {
             <option value="0" disabled>
               Select Network
             </option>
-            <option value="0x7A69">Localhost</option>
-            <option value="0x2a">Kovan</option>
-            <option value="0x5">Goerli</option>
-            <option value="0x11155111">Sepolia</option>
+            <option value="0x7A69" onChange={networkHandler}>
+              Localhost
+            </option>
+            <option value="0x5" onChange={networkHandler}>
+              Goerli
+            </option>
+            <option value="0x13881" onChange={networkHandler}>
+              Mumbai
+            </option>
+            <option value="0xAA36A7" onChange={networkHandler}>
+              Sepolia
+            </option>
           </select>
         )}
       </div>
